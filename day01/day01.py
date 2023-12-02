@@ -1,14 +1,18 @@
-import re
-def concatenate_integers(a, b):
-    concatenated = str(a) + str(b)
-    return int(concatenated)
-sum = 0
-text = open("day01/input.txt", "r")
-for line in text:
-    firstDiget = re.search(r'\d', line[::1]).group()[::1]
-    lastDiget = re.search(r'\d', line[::-1]).group()[::-1]
-    linenumber = concatenate_integers(firstDiget, lastDiget)
-    sum = sum + linenumber
-    print(linenumber)
-
-print(sum)
+with open("day01/input.txt", "r") as file:
+    text = file.read()
+p1 = 0
+p2 = 0
+for line in text.split('\n'):
+  p1_digits = []
+  p2_digits = []
+  for i,c in enumerate(line):
+    if c.isdigit():
+      p1_digits.append(c)
+      p2_digits.append(c)
+    for d,val in enumerate(['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']):
+      if line[i:].startswith(val):
+        p2_digits.append(str(d+1))
+  p1 += int(p1_digits[0]+p1_digits[-1])
+  p2 += int(p2_digits[0]+p2_digits[-1])
+print(p1)
+print(p2)
